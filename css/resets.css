@@ -1,0 +1,44 @@
+/* removes margin and padding from all elements */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* turns all images to block elements */
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* improves media defaults */
+* {
+    max-width: 100%;
+}
+
+/* Automatically adds break lines when text is too long */
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+/* Removes underline from visited links */
+:link, :visited {
+    text-decoration: none;
+}
+
+/* User inputs inherit font style from the body */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+

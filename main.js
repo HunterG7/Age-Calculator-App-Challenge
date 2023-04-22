@@ -2,48 +2,70 @@
 
 //query selectors
 const submitBtn = document.querySelector(".img-wrapper");
-const inputBoxParentDay = document.querySelector("#day-input-box");
-const inputBoxParentMonth = document.querySelector("#month-input-box");
-const inputBoxParentYear = document.querySelector("#year-input-box");
+
+const dayErrorParent = document.querySelector("#day-error");
+const monthErrorParent = document.querySelector("#month-error");
+const yearErrorParent = document.querySelector("#year-error");
+
+const dayDisplayParent = document.querySelector("#day-row p");
+const monthDisplayParent = document.querySelector("#month-row p");
+const yearDisplayParent = document.querySelector("#year-row p");
 
 // event listener
 submitBtn.addEventListener('click', (e)=>{
+    dayErrorParent.innerHTML = "";
+    monthErrorParent.innerHTML = "";
+    yearErrorParent.innerHTML = "";
+
     let day = document.querySelector("#day-value").value;
     let month = document.querySelector("#month-value").value;
     let year = document.querySelector("#year-value").value;
-
-    // button styling
-    submitBtn.classList.add("clicked");
-    setTimeout(()=>{
-        submitBtn.classList.remove("clicked");
-    }, 1000);
-
     let validationCount = 0;
+
     dayMonthValidation(day, month, year, validationCount);
 });
 
-// Receive validation errors if:
-// Any field is empty when the form is submitted
 
-// The day number is not between 1-31
-// The month number is not between 1-12
-// The year is in the future
-// The date is invalid e.g. 31/04/1991 (there are 30 days in April)
-// View the optimal layout for the interface depending on their device's screen size
-// See hover and focus states for all interactive elements on the page
-// Bonus: See the age numbers animate to their final number when the form is submitted
+// calculates results and renders them onto page functions
+const calculateResults = (day, month, year) => {
+
+
+
+
+    renderResults();
+}
+
+const renderResults = (day, month, year) => {
+
+}
+
 
 // error functions
-const dayError = () =>{
-
+const dayError = (parent) =>{
+    let errorElement = document.createElement("div");
+    errorElement.innerHTML = `
+        <p class="error-text">Must be a valid day</p> 
+    `;
+    console.log(parent);
+    parent.append(errorElement);
 }
 
-const monthError = () => {
-
+const monthError = (parent) => {
+    let errorElement = document.createElement("div");
+    errorElement.innerHTML = `
+        <p class="error-text">Must be a valid month</p> 
+    `;
+    console.log(parent);
+    parent.append(errorElement);
 }
 
-const yearError = () => {
-
+const yearError = (parent) => {
+    let errorElement = document.createElement("div");
+    errorElement.innerHTML = `
+        <p class="error-text">Must be a valid year</p> 
+    `;
+    console.log(parent);
+    parent.append(errorElement);
 }
 
 const emptyFieldError = (parent) => {
@@ -55,10 +77,6 @@ const emptyFieldError = (parent) => {
     parent.append(errorElement);
 }
 
-// render results onto page function
-const renderResults = (day, month, year) => {
-
-}
 
 // validation functions
 const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
@@ -68,18 +86,14 @@ const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
 
     // checks basic day and month conditions
     if (monthStr.trim() === ""){
-        emptyFieldError(inputBoxParentMonth);
-    } else if (isNaN(month)){
-        console.log("error");
-    } else if (month < 1 || month > 12){
-        console.log("error");
+        emptyFieldError(monthErrorParent);
+    } else if (isNaN(month) || month < 1 || month > 12){
+        monthError(monthErrorParent);
     }
     if (dayStr.trim() === ""){
-        emptyFieldError(inputBoxParentDay);
-    } else if (isNaN(day)){
-        console.log("error");
-    } else if (day < 1 || day > 31){
-        console.log("error");
+        emptyFieldError(dayErrorParent);
+    } else if (isNaN(day) || day < 1 || day > 31){
+        dayError(dayErrorParent);
     }
 
     // checks num of days based on year and month
@@ -90,7 +104,7 @@ const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
                 if (day <= 29){
                     validationCount++;
                 } else {
-                    console.log("error");
+                    dayError(dayErrorParent);
                 }
                 yearValidation(day, month, yearStr, validationCount);
                 break;
@@ -98,7 +112,7 @@ const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
                 if (day <= 28){
                     validationCount++;
                 } else {
-                    console.log("error");
+                    dayError(dayErrorParent);
                 }
                 yearValidation(day, month, yearStr, validationCount);
                 break;
@@ -111,7 +125,7 @@ const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
             if (day <= 30){
                 validationCount++;
             } else {
-                console.log("error");
+                dayError(dayErrorParent);
             }
             yearValidation(day, month, yearStr, validationCount);
             break;
@@ -125,16 +139,50 @@ const dayMonthValidation = (dayStr, monthStr, yearStr, validationCount) => {
 const yearValidation = (day, month, yearStr, validationCount) => {
     let year = parseInt(yearStr);
     if (yearStr.trim() === "") {
-        emptyFieldError(inputBoxParentYear);
-    } else if (isNaN(year)) {
-        console.log("error");
-    } else if (year < 1){
-        console.log("error");
+        emptyFieldError(yearErrorParent);
+    } else if (isNaN(year) || year < 1 || year > 2023) {
+        yearError(yearErrorParent);
     } else {
         validationCount++;
     }
 
     if (validationCount === 2){
-        renderResults(day, month, year);
+        calculateResults(day, month, year);
     }
 }
+
+// CHATGPT CODE
+// const calculateAgeDifference = (date1, date2) => {
+//     const d1 = new Date(date1.year, date1.month - 1, date1.day);
+//     const d2 = new Date(date2.year, date2.month - 1, date2.day);
+//     const currentDate = new Date();
+//
+//     if (d1 > currentDate) {
+//         return "Date 1 is in the future";
+//     } else if (d2 > currentDate) {
+//         return "Date 2 is in the future";
+//     } else if (d1 > d2) {
+//         return "Date 1 is later than date 2";
+//     } else {
+//         let years = d2.getFullYear() - d1.getFullYear();
+//         let months = d2.getMonth() - d1.getMonth();
+//         let days = d2.getDate() - d1.getDate();
+//
+//         if (months < 0) {
+//             years--;
+//             months += 12;
+//         }
+//
+//         if (days < 0) {
+//             months--;
+//             const daysInPrevMonth = new Date(
+//                 d2.getFullYear(),
+//                 d2.getMonth(),
+//                 0
+//             ).getDate();
+//             days += daysInPrevMonth;
+//         }
+//
+//         return `${years} years, ${months} months, and ${days} days`;
+//     }
+// };

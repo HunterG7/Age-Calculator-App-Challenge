@@ -37,10 +37,9 @@ main.container {
 /* FORM */
 #form-row {
     height: 25%;
-    border-bottom: 1px solid var(--light-grey);
     gap: 40px;
     position: relative;
-    padding: 25px 0;
+    padding-top: 25px;
 }
 .input-box {
     flex-grow: 0;
@@ -88,13 +87,12 @@ main.container {
     border-radius: 9999%;
     background-color: var(--purple);
     cursor: pointer;
-    transition: background-color .2s ease-in;
+}
+.img-wrapper:hover {
+    background-color: var(--off-black);
 }
 .img-wrapper img {
     height: 70px;
-}
-.clicked {
-    background-color: var(--off-black);
 }
 
 /* RESULTS */
@@ -114,7 +112,8 @@ main.container {
 
 /* ERRORS */
 #error-row {
-    height: fit-content;
+    height: 30px;
+    border-bottom: 1px solid var(--light-grey);
 }
 .error-text {
     font-style: italic;
